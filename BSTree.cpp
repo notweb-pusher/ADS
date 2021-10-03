@@ -1,6 +1,9 @@
+#include <ios>
 #include <iostream>
 #include <type_traits>
 #include <vector>
+#include <queue>
+
 using namespace std;
 
 class BSTree
@@ -60,7 +63,7 @@ public:
         return root;
     }
 
-    void inorder(BSTree::Node* node)
+    void inorder(Node* node)
     {
         if (node)
         {
@@ -70,7 +73,7 @@ public:
         }
     }
 
-    void preorder(BSTree::Node* node)
+    void preorder(Node* node)
     {
         if (node)
         {
@@ -80,7 +83,7 @@ public:
         }
     }
 
-    void postorder(BSTree::Node* node)
+    void postorder(Node* node)
     {
         if (node)
         {
@@ -90,9 +93,27 @@ public:
         }
     }
 
-    void levelorder(BSTree& myTree)
+    void bfs()
     {
 
+        if (!_root)
+            return ;
+        
+        queue<Node*> queue;
+        queue.push(_root);
+
+        while(!queue.empty())
+        {
+            Node* tmp = queue.front();
+            cout << tmp->key << ' ';
+
+            if (tmp->left != nullptr)
+                queue.push(tmp->left);
+            if (tmp->right != nullptr)
+                queue.push(tmp->right);
+
+            queue.pop();
+        }
     }
 private:
     Node* _root;
@@ -100,16 +121,16 @@ private:
 
 int main()
 {
-    BSTree myTree;
-    vector<int>  data = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+    // BSTree myTree;
+    // vector<int>  data = {8, 3, 10, 1, 6, 14, 4, 7, 13};
 
-    for (int i = 0; i < data.size(); i++)
-        myTree.insert(data[i]);
+    // for (int i = 0; i < data.size(); i++)
+    //     myTree.insert(data[i]);
 
-    myTree.inorder(myTree.getRoot());
-    myTree.preorder(myTree.getRoot());
-    myTree.postorder(myTree.getRoot());
-
+    // myTree.inorder(myTree.getRoot());
+    // myTree.preorder(myTree.getRoot());
+    // myTree.postorder(myTree.getRoot());
+    // myTree.bfs();
     // if (myTree.search(228))
     // {
     //     cout << "Value found" << endl;
