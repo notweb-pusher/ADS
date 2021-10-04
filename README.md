@@ -4,3 +4,4 @@ Here is the list of implemented algorithms:
 - MinHeap
 - QuickSort
 - Binary Search Tree
+- AVL Tree
