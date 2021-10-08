@@ -124,17 +124,17 @@ private:
   {
     int height_delta = getHeightDelta(node);
 
-    if (height_delta > 1 && key < node->left->key) {
+    if (height_delta >= 1 && key < node->left->key) {
       return rightRotate(node);
     }
-    if (height_delta > 1 && key > node->left->key) {
+    if (height_delta >= 1 && key > node->left->key) {
       node->left = leftRotate(node->left);
       return rightRotate(node);
     }
-    if (height_delta < -1 && key > node->right->key) {
+    if (height_delta <= -1 && key > node->right->key) {
       return leftRotate(node);
     }
-    if (height_delta < -1 && key < node->right->key) {
+    if (height_delta <= -1 && key < node->right->key) {
       node->right = rightRotate(node->right);
       return leftRotate(node);
     }
