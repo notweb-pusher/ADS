@@ -6,7 +6,8 @@ using namespace std;
 
 class AVLTree {
 public:
-  class Node {
+  class Node 
+  {
   public:
     Node() {}
     Node(int key) : key(key), height(0), left(nullptr), right(nullptr) {}
@@ -84,9 +85,24 @@ private:
     else if (node->key > key)
       erase(node->left, key);
 
-    node->height = 1 + maxHeight(node);
+    node->height = 1 + std::max(height(node->left), height(node->right));
 
-    rebalance(node, key);
+    int height_delta = getHeightDelta(node);
+
+    if (height_delta >= 1 && key < node->left->key) {
+      return rightRotate(node);
+    }
+    if (height_delta >= 1 && key > node->left->key) {
+      node->left = leftRotate(node->left);
+      return rightRotate(node);
+    }
+    if (height_delta <= -1 && key > node->right->key) {
+      return leftRotate(node);
+    }
+    if (height_delta <= -1 && key < node->right->key) {
+      node->right = rightRotate(node->right);
+      return leftRotate(node);
+    }
 
     return node;
   }
@@ -113,60 +129,78 @@ private:
       return node;
     }
 
-    node->height = 1 + maxHeight(node);
+    node->height = 1 + max(height(node->left), height(node->right));
     
-    return rebalance(node, key);
-
-    // return node;
-  }
-
-  Node* rebalance(Node *node, int key) 
-  {
     int height_delta = getHeightDelta(node);
 
-    if (height_delta >= 1 && key < node->left->key) {
+    if (height_delta > 1 && key < node->left->key) {
       return rightRotate(node);
     }
-    if (height_delta >= 1 && key > node->left->key) {
+    if (height_delta > 1 && key > node->left->key) {
       node->left = leftRotate(node->left);
       return rightRotate(node);
     }
-    if (height_delta <= -1 && key > node->right->key) {
+    if (height_delta < -1 && key > node->right->key) {
       return leftRotate(node);
     }
-    if (height_delta <= -1 && key < node->right->key) {
+    if (height_delta < -1 && key < node->right->key) {
       node->right = rightRotate(node->right);
       return leftRotate(node);
     }
 
     return node;
+
+    // return node;
   }
+
+//   Node* rebalance(Node *node, int key) 
+//   {
+//     int height_delta = getHeightDelta(node);
+
+//     if (height_delta >= 1 && key < node->left->key) {
+//       return rightRotate(node);
+//     }
+//     if (height_delta >= 1 && key > node->left->key) {
+//       node->left = leftRotate(node->left);
+//       return rightRotate(node);
+//     }
+//     if (height_delta <= -1 && key > node->right->key) {
+//       return leftRotate(node);
+//     }
+//     if (height_delta <= -1 && key < node->right->key) {
+//       node->right = rightRotate(node->right);
+//       return leftRotate(node);
+//     }
+
+//     return node;
+//   }
 
   Node *rightRotate(Node *node) {
     Node *tmp = node->left;
     node->left = tmp->right;
     tmp->right = node;
 
-    node->height = 1 + maxHeight(node);
-    tmp->height = 1 + maxHeight(tmp);
+    node->height = 1 + max(height(node->left), height(node->right));
+    tmp->height = 1 + max(height(node->left), height(node->right));
 
     return tmp;
   }
 
-  Node *leftRotate(Node *node) {
+  Node *leftRotate(Node *node) 
+  {
     Node *tmp = node->right;
     node->right = tmp->left;
     tmp->left = node;
 
-    node->height = 1 + maxHeight(node);
-    tmp->height = 1 + maxHeight(tmp);
+    node->height = 1 + max(height(node->left), height(node->right));
+    tmp->height = 1 + max(height(tmp->left), height(tmp->right));
 
     return tmp;
   }
 
-  int maxHeight(Node *node) {
-    return node ? max(height(node->left), height(node->right)) : 0;
-  }
+//   int maxHeight(Node *node) {
+//     return node ? max(height(node->left), height(node->right)) : 0;
+//   }
 
   int height(Node *node) { return node ? node->height : 0; }
   int getHeightDelta(Node *node) {
@@ -183,7 +217,7 @@ private:
 };
 
 int main() {
-  vector<int> a = {1, 2, 3, 4};
+  vector<int> a = {2, 1, 3, 4};
   AVLTree myTree;
 
   for (auto el : a)
