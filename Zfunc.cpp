@@ -1,9 +1,3 @@
-// Exercise #1: Create a class "ZFinder" with a constructor that receives the
-// pattern to search in a text An integer function "find" in class "ZFinder"
-// must return the index of the next occurrence of the pattern in the text. A
-// function "freq" that returns the number of occurrences of the pattern in the
-// text.
-
 #include <iostream>
 #include <string>
 #include <vector>
