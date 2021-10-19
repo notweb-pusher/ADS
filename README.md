@@ -5,4 +5,5 @@ Here is the list of implemented algorithms:
 - QuickSort
 - Binary Search Tree
 - AVL Tree
+- Trie ( incoming ... )
 - Z function
