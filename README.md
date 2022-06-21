@@ -1,5 +1,5 @@
 # ADS
-This repository is dedicated to Algorithm and Data structures.
+This repository was dedicated to Algorithm and Data structures.
 Here is the list of implemented algorithms:
 - MinHeap
 - QuickSort
@@ -8,4 +8,4 @@ Here is the list of implemented algorithms:
 - Trie
 - Z function
 - KMP
-- few more coming soon
+- few more coming soon (actually not)
